@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CHUNITHM Intl. NEW PLUS!! Modder</title>
+        <link rel="stylesheet" href="../css/style.css">
+        <script type="text/javascript" src="../js/jquery-3.3.1.slim.min.js"></script>
+        <script type="text/javascript" src="../js/FileSaver.min.js"></script>
+        <script type="text/javascript" src="../js/dllpatcher.js"></script>
+        <script type="text/javascript">
+            function s2b(str) {
+                var ret = [];
+                for (var i = 0; i < str.length; ++i) {
+                    ret.push(str.charCodeAt(i));
+                }
+                return ret;
+            }
+            window.addEventListener("load", function () {
+                new PatchContainer([
+                    new Patcher("chusanApp.exe", "1.15.00", [
+                        {
+                            name: "Force shared audio mode, system audio samplerate must be 48000", //DONE
+                            tooltip: "Improves compatibility but may increase latency",
+                            patches: [
+                            { offset: 0x1E6380A, off: [0x01], on: [0x00] },
+                            ],
+                        },
+                        {
+                            name: "Force 2 channel audio output", //DONE
+                            patches: [
+                            { offset: 0x1E638E1, off: [0x75, 0x3F], on: [0x90, 0x90] },
+                            ],
+                        },
+                        {
+                            name: "Disable Song Select Timer", //DONE
+                            patches: [
+                            { offset: 0x19544CB, off: [0x74], on: [0xEB] },
+                            ],
+                        },
+                        {
+                            name: "Set All Timers to 999", //DONE
+                            patches: [
+                            {
+                                offset: 0x17DFC60,
+                                off: [0x8b, 0x44, 0x24, 0x04, 0x69, 0xc0, 0xe8, 0x03, 0x00, 0x00],
+                                on: [0xb8, 0x58, 0x3e, 0x0f, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90],
+                            },
+                            ],
+                        },
+                        {
+                            name: "No Encryption and tls", //DONE
+                            tooltip: "This will also disable TLS",
+                            patches: [
+                            { offset: 0x2CF4558, off: [0x78, 0x00, 0x00, 0x00, 0x78, 0x00, 0x00, 0x00], on: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] },
+                            ]
+                        },
+                        {
+                            name: "AUTO PLAY", //DONE
+                            patches: [
+                            {
+                                offset: 0x16C0155,
+                                off: [0x8a, 0x84, 0x24, 0x80, 0x00, 0x00, 0x00],
+                                on: [0xb0, 0x02, 0x90, 0x90, 0x90, 0x90, 0x90],
+                            },
+                            { offset: 0x191252E, off: [0x00], on: [0x01] },
+                            ],
+                        },
+                        {
+                            name: "Force 120 fps", //DONE
+                            tooltip: "Force the game to run in 120 Hz mode.",
+                            patches: [
+                                {offset: 0xFC1889, off: [0x00], on: [0x01]}
+                            ]
+                        }
+                    ])
+                ]);
+				new PatchContainer([
+                new Patcher("amdaemon.exe", "amdaemonExe Ver.18b7e916 Build:Oct 19 2021 21:12:01", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {offset: 0x68F4C4, off: [0x31, 0x32, 0x37, 0x2f], on: [0x30, 0x2F, 0x38, 0x00]},
+                            {offset: 0x3974D4, off: [0xFF, 0x15, 0xBE, 0x5F, 0x1A, 0x00, 0x8B], on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]}
+                        ]
+                    },
+                    {
+                        name: "Infinite credits",
+                        patches: [
+                            {offset: 0x2AEAB8, off: [0x28], on: [0x08]}
+                        ]
+                    }
+                ])
+            ]);
+            });
+        </script>
+    </head>
+    <body>
+        <h1>CHUNITHM Intl. NEW PLUS!! Modder</h1>
+    </body>
+</html>
